@@ -1,0 +1,37 @@
+.about{
+    display: flex;
+    width: 100%;
+    
+}
+.about-left{
+    display: flex;
+    justify-content: center;
+    width: 63%;
+}
+.about-text{
+    width: 37rem;
+}
+.stat{
+    display: flex;
+    justify-content: space-between;
+}
+.about-text h2{
+    font-size: 2.75rem;
+    font-weight: 700;
+}
+.about-text p{
+    font-size: 1rem;
+    font-weight: 400;
+    color: #737373;
+}
+.stat p{
+    color: #DB6B97;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+.about-right{
+    height: 35rem;
+}
+.about-right img{
+    height: 100%;
+}
