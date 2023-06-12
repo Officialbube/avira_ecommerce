@@ -1,11 +1,33 @@
-import React from 'react';
-
+import { React, useState } from 'react';
+import { signInWithEmailAndPassword } from "firebase/auth";
 import './Auth.css';
 import loginImg from '../../assets/images/Illustration.png';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { auth } from '../../firebase/config'
+import { toast } from 'react-toastify';
 
 
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const navigate = useNavigate();
+  const loginUser = (e) => {
+    e.preventDefault()
+    signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      
+      const user = userCredential.user;
+      toast.success("Login Successful..")
+      navigate("/");
+    })
+    .catch((error) => {
+    
+      toast.error(error.message)
+    });
+
+    }
+
   return (
     <section >
         <div className='left' >
@@ -13,13 +35,15 @@ const Login = () => {
         </div>
         <div className='right'>
             <h2>Nice to see you again!</h2>
-            <form action="">
-              <input type="text" placeholder='Email or Phone number' required/>
-              <input type="password" placeholder='password' required/>
+            <form onSubmit={loginUser}>
+              <input type="text" placeholder='Email or Phone number' required value={email} onChange={(e) => 
+              setEmail(e.target.value)} />
+              <input type="password" placeholder='password' required value={password} onChange={(e) => 
+              setPassword(e.target.value)}/>
               <div className='password-option-cont'>
                 <Link to="/reset">forgot password?</Link>
               </div>
-              <button className='btn'>Sign In</button>
+              <button type='submit' className='btn'>Sign In</button>
             </form>
             <p>--or--</p>
             <button className='google'>Login With Google</button>
