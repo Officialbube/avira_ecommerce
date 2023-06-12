@@ -2,7 +2,8 @@ import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Header, Footer} from './components'
 import { HomePage, Shop, About, Login, Register, Reset } from './pages';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import './App.css';
 
@@ -13,6 +14,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
+      <ToastContainer />
       <Header />
         <Routes>
           <Route path='/' element={ <HomePage/>} />
