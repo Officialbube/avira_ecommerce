@@ -1,8 +1,11 @@
 import {useState} from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {AiOutlineShoppingCart, AiOutlineMenu} from "react-icons/ai";
 import logoImg from "../../assets/images/Frame.png"
 import './Header.css';
+import { auth } from "../../firebase/config";
+import { signOut } from "firebase/auth";
+import { toast } from "react-toastify";
 
 
 
@@ -17,7 +20,7 @@ const cart = (
 )
 function Header() {
   const [showMenu, setShowMenu] = useState(false)
-
+  const navigate = useNavigate()
   const toggleMenu = ()=>{
     setShowMenu(!showMenu)
   };
@@ -25,6 +28,16 @@ function Header() {
   const hideMenu = ()=>{
     setShowMenu(false)
   }
+
+  const logoutUser = () => {
+    signOut(auth).then(() => {
+      toast.success("Logout Successfully.")
+      navigate("/")
+    }).catch((error) => {
+      toast.error(error.message)
+    });
+    
+  };
 
   return (
     <header>
@@ -80,7 +93,7 @@ function Header() {
               <Link to='/register'>Sign up</Link>
               <Link to='login'>Sign in</Link>
               <Link to='my-orders'>My Orders</Link>
-              <Link to=''></Link>
+              <Link to='/' onClick={logoutUser}>Logout</Link>
             </span>
             {cart}
         </nav>
