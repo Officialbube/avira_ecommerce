@@ -1,5 +1,5 @@
 import { React, useState } from 'react';
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import './Auth.css';
 import loginImg from '../../assets/images/Illustration.png';
 import { Link, useNavigate } from 'react-router-dom';
@@ -10,6 +10,7 @@ import { toast } from 'react-toastify';
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  
 
   const navigate = useNavigate();
   const loginUser = (e) => {
@@ -27,6 +28,21 @@ const Login = () => {
     });
 
     }
+
+  const provider = new GoogleAuthProvider();
+  const loginWithGoogle = () => {
+    signInWithPopup(auth, provider)
+  .then((result) => {
+    const user = result.user;
+    toast.success("Login successfully")
+    navigate("/")
+    // ...
+  }).catch((error) => {
+    // Handle Errors here.
+    toast.success(error.message)
+  });
+
+  }
 
   return (
     <section >
@@ -46,7 +62,7 @@ const Login = () => {
               <button type='submit' className='btn'>Sign In</button>
             </form>
             <p>--or--</p>
-            <button className='google'>Login With Google</button>
+            <button onClick={loginWithGoogle} className='google'>Login With Google</button>
             <p>Don't have an account?<Link to='/register'> Get started</Link></p>
             
         </div>
